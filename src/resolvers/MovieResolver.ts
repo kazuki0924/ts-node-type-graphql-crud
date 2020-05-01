@@ -17,6 +17,15 @@ class MovieInput {
   @Field(() => Int)
   minutes: number
 }
+
+@InputType()
+class MovieUpdateInput {
+  @Field(() => String, { nullable: true })
+  title?: string
+
+  @Field(() => Int, { nullable: true })
+  minutes?: number
+}
 @Resolver()
 export class MovieResolver {
   @Mutation(() => Movie)
@@ -30,6 +39,14 @@ export class MovieResolver {
     // return true
     const movie = await Movie.create(options).save()
     return movie
+  }
+  @Mutation(() => Boolean)
+  async updateMovie(
+    @Arg('id', () => Int) id: number,
+    @Arg('input', () => MovieUpdateInput) input: MovieUpdateInput
+  ) {
+    await Movie.update({ id }, input)
+    return true
   }
 
   @Query(() => [Movie])
