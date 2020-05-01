@@ -1,7 +1,13 @@
-import { Resolver, Mutation } from 'type-graphql'
+import { Resolver, Mutation, Arg } from 'type-graphql'
 
 @Resolver()
 export class MovieResolver {
-  @Mutation
-  createMovie() {}
+  @Mutation(() => Boolean)
+  createMovie(
+    @Arg('title')
+    title: string
+  ) {
+    console.log(title)
+    return true
+  }
 }
