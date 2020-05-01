@@ -12,7 +12,7 @@ export class MovieResolver {
     return true
   }
 
-  @Query(() =>)
+  @Query(() => [Movie])
   movies() {
     return Movie.find()
   }
