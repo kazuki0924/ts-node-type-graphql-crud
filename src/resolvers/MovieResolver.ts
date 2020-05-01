@@ -1,13 +1,15 @@
-import { Resolver, Mutation, Arg } from 'type-graphql'
+import { Resolver, Mutation, Arg, Int } from 'type-graphql'
+import { Movie } from '../entity/Movie'
 
 @Resolver()
 export class MovieResolver {
   @Mutation(() => Boolean)
-  createMovie(
-    @Arg('title')
-    title: string
+  async createMovie(
+    @Arg('title') title: string
+    // because number is not a GraphQL types, you must inform GraphQL what kind of number it is
+    @Arg('minutes', () => Int) minutes: number
   ) {
-    console.log(title)
+    await Movie.insert({title, minutes})
     return true
   }
 }
